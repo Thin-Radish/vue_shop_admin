@@ -40,7 +40,7 @@
             <el-switch v-model="scope.row.mg_state" @change="userStateChanged(scope.row)" />
           </template>
         </el-table-column>
-        <el-table-column  label="操作">
+        <el-table-column  label="操作" width="280px">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
             <el-button type="primary" icon="el-icon-edit"  size="mini" @click="showEditDialog(scope.row.id)"/>
@@ -48,12 +48,13 @@
             <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)"/>
             <!-- 分配角色 -->
             <el-tooltip class="item" effect="dark" content="分配角色" placement="top">
-              <el-button type="warning" icon="el-icon-setting" size="mini"/>
+              <el-button type="warning" icon="el-icon-setting" size="mini" @click="setRole(scope.row)"/>
             </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
+
     <!-- 分页区域 -->
     <el-pagination
       @size-change="handleSizeChange"
@@ -112,12 +113,35 @@
         </el-form-item>
       </el-form>
       <!-- 底部区域 -->
-      <span slot="footer" class="dialog-footer">
+      <span slot="footer">
         <el-button @click="editDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="editUserInfo">确 定</el-button>
       </span>
     </el-dialog>
 
+    <!-- 分配角色的对话框 -->
+    <el-dialog
+      title="分配权限" width="50%"
+      :visible.sync="setRoleDialogVisible"
+      @close="setRoleDialogClosed">
+      <!-- 内容主体区 -->
+      <div>
+        <p>当前的用户: {{userInfo.username}}</p>
+        <p>当前的角色: {{userInfo.role_name}}</p>
+        <p>分配新角色：
+          <el-select v-model="selectedRoleId" placeholder="请选择">
+            <el-option v-for="item in rolesList" :key="item.id"
+            :label="item.roleName" :value="item.id">
+            </el-option>
+          </el-select>
+        </p>
+      </div>
+      <!-- 底部区域 -->
+      <span slot="footer">
+        <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveRoleInfo">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -128,9 +152,11 @@
     userStateChanged_, addUser_,
     addUserById_,
     editUser_,
-    deleteUserById_
+    deleteUserById_,
+    setUserRole_
   } from 'api/users'
   import { checkEmail, checkMobile } from 'common/utils/validator'
+  import { getRoleList_} from "api/roles"
   export default {
     name: "Users",
     data() {
@@ -175,6 +201,14 @@
         //修改用户的对话框的显示与隐藏
         editDialogVisible: false,
         editForm: {},
+        //分配角色的对话框的显示与隐藏
+        setRoleDialogVisible: false,
+        //需要分配角色的用户信息
+        userInfo: {},
+        //所有角色的数据列表
+        rolesList: [],
+        //已选择的角色id值
+        selectedRoleId: '',
       }
     },
     created() {
@@ -226,7 +260,6 @@
       //修改用户信息
       async showEditDialog(id){
         const { data: res } = await addUserById_(id);
-        console.log(res);
         if(res.meta.status !== 200) return this.$message.error("查询用户信息失败!");
 
         this.editForm = res.data;
@@ -265,6 +298,30 @@
           this.$message.success("删除用户成功!");
           this.getUserList();
         }
+      },
+      //展示分配角色的对话框
+      async setRole(userInfo) {
+        this.userInfo = userInfo;
+
+        //先获取所有角色列表
+        const { data: res } = await getRoleList_();
+        if(res.meta.status !== 200) return this.$message.error("获取权限列表失败!");
+
+        this.rolesList = res.data;
+        this.setRoleDialogVisible = true;
+      },
+      async saveRoleInfo() {
+        if(!this.selectedRoleId) return this.$message.error("请选择要分配的角色!");
+
+        const { data: res } = await setUserRole_(this.userInfo.id, this.selectedRoleId);
+        if(res.meta.status !== 200) return this.$message.error("更新角色失败!");
+
+        this.$message.success("更新角色成功!");
+        this.getUserList();
+        this.setRoleDialogVisible = false;
+      }, 
+      setRoleDialogClosed() {
+        this.selectedRoleId = '';
       }
     }
   }
