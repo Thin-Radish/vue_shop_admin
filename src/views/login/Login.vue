@@ -28,7 +28,6 @@
             <el-button type="info" @click="resetLoginForm">重置</el-button>
         </el-form-item>
       </el-form>
-
     </div>
   </div>
 </template>
@@ -64,7 +63,7 @@
       login() {
         this.$refs.loginFormRef.validate(async valid => {
           if (!valid) return;
-          const res = await userLogin(this.loginForm);
+          const { data: res } = await userLogin(this.loginForm);
 
           if(res.meta.status !== 200) return this.$message.error(res.meta.msg+'!');
           this.$message.success("登录成功!");

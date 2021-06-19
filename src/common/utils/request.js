@@ -16,6 +16,8 @@ export function request(config) {
   //2.1.请求拦截
 
   instance.interceptors.request.use(config=>{
+    //为请求对象，添加token验证的Authorization
+    config.headers.Authorization = window.sessionStorage.getItem('token');
 
     return config                             
   })
@@ -24,7 +26,7 @@ export function request(config) {
   //2.2.响应拦截
   instance.interceptors.response.use(res=>{      
   
-    return res.data
+    return res;
   },err=>{
 
   })
