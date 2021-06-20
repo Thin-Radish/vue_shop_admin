@@ -25,9 +25,6 @@ body,
   margin-top: 15px;
 }
 
-.el-cascader {
-  width: 100%;
-}
 
 /* 设置cascader可区域滚动 */
 .el-scrollbar__wrap{

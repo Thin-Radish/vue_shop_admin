@@ -73,7 +73,6 @@
           :options="parentCateList"
           :props="cascaderProps"
           @change="parentCateChanged"
-          expand-trigger="hover"
           clearable>
           </el-cascader>
         </el-form-item>
@@ -237,6 +236,10 @@
 </script>
 
 <style lang="less" scoped>
+  .el-cascader {
+    width: 100%;
+  }
+  
   .tree-table {
     margin-top: 15px;
     min-width: 800px;
