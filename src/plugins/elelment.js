@@ -33,6 +33,8 @@ import {
   Alert,
   Tabs,
   TabPane,
+  steps,
+  step,
 } from 'element-ui'
 
 
@@ -69,4 +71,6 @@ Vue.use(Cascader)
 Vue.use(Alert)
 Vue.use(Tabs)
 Vue.use(TabPane)
+Vue.use(steps)
+Vue.use(step)
 

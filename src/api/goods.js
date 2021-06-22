@@ -15,3 +15,20 @@ export function addCate_(addCateForm){
     data: addCateForm
   })
 }
+
+export function getGoodsList_(queryInfo){
+  return request({
+    method: 'get',
+    url: 'goods',
+    params: queryInfo
+  })
+}
+
+export function removeGoodsById_(id){
+  return request({
+    method: 'delete',
+    url: `goods/${id}`,
+  })
+}
+
+

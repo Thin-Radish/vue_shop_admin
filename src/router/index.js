@@ -5,10 +5,12 @@ const Login = () => import('views/login/Login' );
 const Home = () => import('views/home/Home' );
 const Welcome = () => import('views/welcome/Welcome' );
 const Users = () => import('views/users/Users' );
-const Rights = () => import('views/rights/Rights' );
-const Roles = () => import('views/roles/Roles' );
+const Rights = () => import('views/power/Rights' );
+const Roles = () => import('views/power/Roles' );
 const Category = () => import('views/goods/Category' );
-const Params = () => import('views/params/Params' );
+const Params = () => import('views/goods/Params' );
+const GoodsList = () => import('views/goods/List' );
+const AddGoods = () => import('views/goods/Add' );
 
 Vue.use(VueRouter)
 
@@ -23,6 +25,8 @@ const routes = [
       { path: '/roles',  name: 'Roles',  component: Roles, },
       { path: '/categories',  name: 'Category',  component: Category, },
       { path: '/params',  name: 'Params',  component: Params, },
+      { path: '/goods',  name: 'GoodsList',  component: GoodsList, },
+      { path: '/goods/add',  name: 'AddGoods',  component: AddGoods, },
     ]  
   },
 ]
