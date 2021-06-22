@@ -35,3 +35,11 @@ export function removeParams_(queryInfo){
   })
 }
 
+export function putAttrVals_(queryInfo){
+  return request({
+    method: 'put',
+    url: `categories/${queryInfo.id}/attributes/${queryInfo.attrId}`,
+    data: queryInfo
+  })
+}
+
