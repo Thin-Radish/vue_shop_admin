@@ -24,7 +24,7 @@
               <!-- 图标 -->
               <i :class="iconObj[item.id]"></i>
               <!-- 文本 -->
-              <span>{{item.authName}}</span>
+              <span class="first-label">{{item.authName}}</span>
             </template>
             <!-- 二级菜单 -->
             <el-menu-item :index="'/'+subItem.path" v-for="subItem in item.children" 
@@ -135,6 +135,10 @@
     cursor: pointer;
     text-align: center;
     color: #fff;
+  }
+
+  .first-label {
+    margin-left: 5px;
   }
 
 </style>

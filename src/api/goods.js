@@ -32,3 +32,11 @@ export function removeGoodsById_(id){
 }
 
 
+export function addGoods_(addGoodsform){
+  return request({
+    method: 'post',
+    url: 'goods',
+    data: addGoodsform
+  })
+}
+
