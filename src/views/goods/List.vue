@@ -29,7 +29,7 @@
       </el-row>
       <!-- 商品列表区域 -->
       <el-table :data="goodsList" stripe border>
-        <el-table-column type="index"> </el-table-column>
+        <el-table-column type="index" label="#"></el-table-column>
         <el-table-column prop="goods_name"  label="商品名称"></el-table-column>
         <el-table-column prop="goods_price" label="商品价格(元)" width="105px"> </el-table-column>
         <el-table-column prop="goods_number" label="商品数量"></el-table-column>
@@ -90,7 +90,7 @@
         const { data: res } = await getGoodsList_(this.queryInfo);
         if(res.meta.status !== 200) return this.$message.error("获取商品列表失败!");
 
-        this.$message.success("获取参数列表成功!");
+        // this.$message.success("获取参数列表成功!");
         this.goodsList = res.data.goods;
         this.total = res.data.total;
       },
