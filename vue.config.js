@@ -8,7 +8,8 @@ module.exports = {
         'api':'@/api',
         'views':'@/views',
       }
-    }
+    },
+    
   },
   devServer: {
     open:true,

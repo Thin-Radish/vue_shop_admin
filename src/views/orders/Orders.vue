@@ -108,8 +108,8 @@
 
 <script>
   import { getOrderList_, getProgressInfo_} from "api/orders"
-  import cityData from "./citydata.js"
-  import progressInfo from "./progressInfo.js"
+  import cityData from "assets/data/citydata.json"
+  import progressInfo from "assets/data/progressInfo.json"
   export default {
     name: "Orders",
     data() {
